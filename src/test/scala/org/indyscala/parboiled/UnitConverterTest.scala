@@ -68,8 +68,24 @@ class UnitConverterTest extends Specification {
       UnitConverter.exec("2^2") === 4
     }
 
+    "2^2^2=16" in {
+      UnitConverter.exec("2^2^2") === 16
+    }
+
+    "2^2^(1*1+1)=16" in {
+      UnitConverter.exec("2^2^(1*1+1)") === 16
+    }
+
     "sqrt(4)=2" in {
       UnitConverter.exec("sqrt(4)") === 2
+    }
+
+    "sqrt(8+2*4+9)=5" in {
+      UnitConverter.exec("sqrt(8+2*4+9)") === 5
+    }
+
+    "sqrt((8+2)*4+9)=7" in {
+      UnitConverter.exec("sqrt((8+2)*4+9)") === 7
     }
   }
 }
