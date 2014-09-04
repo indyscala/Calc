@@ -21,6 +21,7 @@ object UnitConverter {
       case Multiplication(a, b) => eval(a) * eval(b)
       case Division(a, b) => eval(a) / eval(b)
       case Power(a, b) => Math.pow(eval(a), eval(b)).toInt
+      case Sqrt(e) => Math.sqrt(eval(e)).toInt
     }
 
   // our abstract syntax tree model
@@ -31,6 +32,7 @@ object UnitConverter {
   case class Multiplication(lhs: Expr, rhs: Expr) extends Expr
   case class Division(lhs: Expr, rhs: Expr) extends Expr
   case class Power(lhs: Expr, rhs: Expr) extends Expr
+  case class Sqrt(e:Expr) extends Expr
 }
 
 class UnitConverter(val input: ParserInput) extends Parser {
@@ -51,12 +53,14 @@ class UnitConverter(val input: ParserInput) extends Parser {
     | '^' ~ Factor ~> Power)
   }
 
-  def Factor = rule { Number | Parens }
+  def Factor = rule { Number | Parens | Root }
 
   def Parens = rule { '(' ~ Expression ~ ')' }
 
   def Number = rule { capture(Digits) ~> Value }
 
   def Digits = rule { oneOrMore(CharPredicate.Digit) }
+
+  def Root = rule { "sqrt(" ~ Expression ~ ')' ~> Sqrt }
 }
 

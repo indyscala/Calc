@@ -67,5 +67,9 @@ class UnitConverterTest extends Specification {
     "2^2=4" in {
       UnitConverter.exec("2^2") === 4
     }
+
+    "sqrt(4)=2" in {
+      UnitConverter.exec("sqrt(4)") === 2
+    }
   }
 }
