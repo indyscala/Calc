@@ -19,6 +19,7 @@ object UnitConverter {
       case Subtraction(a, b)    => eval(a) - eval(b)
       case Multiplication(a, b) => eval(a) * eval(b)
       case Division(a, b)       => eval(a) / eval(b)
+      case Power(a, b)          => eval(a) ^ eval(b)
     }
 
   // our abstract syntax tree model
@@ -28,6 +29,7 @@ object UnitConverter {
   case class Subtraction(lhs: Expr, rhs: Expr) extends Expr
   case class Multiplication(lhs: Expr, rhs: Expr) extends Expr
   case class Division(lhs: Expr, rhs: Expr) extends Expr
+  case class Power(lhs: Expr, rhs: Expr) extends Expr
 }
 
 class UnitConverter(val input: ParserInput) extends Parser {
@@ -44,7 +46,8 @@ class UnitConverter(val input: ParserInput) extends Parser {
   def Term = rule {
     Factor ~ zeroOrMore(
       '*' ~ Factor ~> Multiplication
-    | '/' ~ Factor ~> Division)
+    | '/' ~ Factor ~> Division
+    | '^' ~ Factor ~> Power)
   }
 
   def Factor = rule { Number | Parens }

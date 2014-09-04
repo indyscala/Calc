@@ -1,7 +1,7 @@
 package org.indyscala.parboiled
 
+import org.parboiled2.ParseError
 import org.specs2.mutable.{Before, Specification}
-import org.specs2.specification.Scope
 
 /**
  * Created by petarvlahu on 02.9.14.
@@ -59,5 +59,10 @@ class UnitConverterTest extends Specification {
     "(2*(4/2*(1+2)-4)+3-1-1)-1 = 4" in {
       UnitConverter.exec("(2*(4/2*(1+2)-4)+3-1-1)-1") === 4
     }
+
+    "((( is an error" in {
+      UnitConverter.exec("(((") should throwA[ParseError]
+    }
+
   }
 }
