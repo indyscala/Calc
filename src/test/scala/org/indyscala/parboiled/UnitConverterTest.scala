@@ -87,5 +87,13 @@ class UnitConverterTest extends Specification {
     "sqrt((8+2)*4+9)=7" in {
       UnitConverter.exec("sqrt((8+2)*4+9)") === 7
     }
+
+    "1.0+2.2=3.2" in {
+      UnitConverter.exec("1.0+2.2") === 3.2
+    }
+
+    "1+2.2=3.2" in {
+      UnitConverter.exec("1+2.2") === 3.2
+    }
   }
 }

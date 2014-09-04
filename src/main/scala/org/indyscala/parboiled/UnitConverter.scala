@@ -9,18 +9,18 @@ import scala.math._
  * Created by petarvlahu on 02.9.14.
  */
 object UnitConverter {
-  def exec(line: String): Int = {
+  def exec(line: String): Double = {
     eval(new UnitConverter(line).InputLine.run().get)
   }
 
-  def eval(expr: Expr): Int =
+  def eval(expr: Expr): Double =
     expr match {
-      case Value(v) => v.toInt
+      case Value(v) => v.toDouble
       case Addition(a, b) => eval(a) + eval(b)
       case Subtraction(a, b) => eval(a) - eval(b)
       case Multiplication(a, b) => eval(a) * eval(b)
       case Division(a, b) => eval(a) / eval(b)
-      case Power(a, b) => Math.pow(eval(a), eval(b)).toInt
+      case Power(a, b) => Math.pow(eval(a), eval(b))
       case Sqrt(e) => Math.sqrt(eval(e)).toInt
     }
 
@@ -59,7 +59,9 @@ class UnitConverter(val input: ParserInput) extends Parser {
 
   def Number = rule { capture(Digits) ~> Value }
 
-  def Digits = rule { oneOrMore(CharPredicate.Digit) }
+  def Digits = rule {
+      zeroOrMore(CharPredicate.Digit) ~ '.' ~ oneOrMore(CharPredicate.Digit) | oneOrMore(CharPredicate.Digit)
+  }
 
   def Root = rule { "sqrt(" ~ Expression ~ ')' ~> Sqrt }
 }
