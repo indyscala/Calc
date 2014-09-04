@@ -3,6 +3,7 @@ package org.indyscala.parboiled
 import org.parboiled2._
 
 import scala.util.{Failure, Success}
+import scala.math._
 
 /**
  * Created by petarvlahu on 02.9.14.
@@ -14,12 +15,12 @@ object UnitConverter {
 
   def eval(expr: Expr): Int =
     expr match {
-      case Value(v)             => v.toInt
-      case Addition(a, b)       => eval(a) + eval(b)
-      case Subtraction(a, b)    => eval(a) - eval(b)
+      case Value(v) => v.toInt
+      case Addition(a, b) => eval(a) + eval(b)
+      case Subtraction(a, b) => eval(a) - eval(b)
       case Multiplication(a, b) => eval(a) * eval(b)
-      case Division(a, b)       => eval(a) / eval(b)
-      case Power(a, b)          => eval(a) ^ eval(b)
+      case Division(a, b) => eval(a) / eval(b)
+      case Power(a, b) => Math.pow(eval(a), eval(b)).toInt
     }
 
   // our abstract syntax tree model

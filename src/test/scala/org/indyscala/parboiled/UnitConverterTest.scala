@@ -64,5 +64,8 @@ class UnitConverterTest extends Specification {
       UnitConverter.exec("(((") should throwA[ParseError]
     }
 
+    "2^2=4" in {
+      UnitConverter.exec("2^2") === 4
+    }
   }
 }
