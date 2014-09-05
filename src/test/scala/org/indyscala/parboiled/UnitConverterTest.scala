@@ -95,5 +95,17 @@ class UnitConverterTest extends Specification {
     "1+2.2=3.2" in {
       UnitConverter.exec("1+2.2") === 3.2
     }
+
+    "1,0+2,2=3.2" in {
+      UnitConverter.exec("1,0+2,2") === 3.2
+    }
+
+    "1.0+2,2=3.2" in {
+      UnitConverter.exec("1.0+2,2") === 3.2
+    }
+
+    "1+2,2=3.2" in {
+      UnitConverter.exec("1+2,2") === 3.2
+    }
   }
 }

@@ -15,7 +15,7 @@ object UnitConverter {
 
   def eval(expr: Expr): Double =
     expr match {
-      case Value(v) => v.toDouble
+      case Value(v) => v.replace(",",".").toDouble
       case Addition(a, b) => eval(a) + eval(b)
       case Subtraction(a, b) => eval(a) - eval(b)
       case Multiplication(a, b) => eval(a) * eval(b)
@@ -42,25 +42,33 @@ class UnitConverter(val input: ParserInput) extends Parser {
 
   def Expression: Rule1[Expr] = rule {
     Term ~ zeroOrMore(
-      '+' ~ Term ~> Addition
-    | '-' ~ Term ~> Subtraction)
+      '+' ~ Term ~> Addition |
+      '-' ~ Term ~> Subtraction)
   }
 
   def Term = rule {
     Factor ~ zeroOrMore(
-      '*' ~ Factor ~> Multiplication
-    | '/' ~ Factor ~> Division
-    | '^' ~ Factor ~> Power)
+      '*' ~ Factor ~> Multiplication |
+      '/' ~ Factor ~> Division |
+      '^' ~ Factor ~> Power)
   }
 
-  def Factor = rule { Number | Parens | Root }
+  def Factor = rule { Parens | Root | Number }
 
   def Parens = rule { '(' ~ Expression ~ ')' }
 
   def Number = rule { capture(Digits) ~> Value }
 
   def Digits = rule {
-      zeroOrMore(CharPredicate.Digit) ~ '.' ~ oneOrMore(CharPredicate.Digit) | oneOrMore(CharPredicate.Digit)
+      zeroOrMore(CharPredicate.Digit) ~ optional(Frac)
+  }
+
+  def Frac = rule {
+    DecimalPoint ~ oneOrMore(CharPredicate.Digit)
+  }
+
+  def DecimalPoint = rule {
+    ch('.') | ch(',')
   }
 
   def Root = rule { "sqrt(" ~ Expression ~ ')' ~> Sqrt }
