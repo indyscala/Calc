@@ -8,9 +8,9 @@ import scala.math._
 /**
  * Created by petarvlahu on 02.9.14.
  */
-object UnitConverter {
+object Calc{
   def exec(line: String): Double = {
-    eval(new UnitConverter(line).InputLine.run().get)
+    eval(new Calc(line).InputLine.run().get)
   }
 
   def eval(expr: Expr): Double =
@@ -35,8 +35,8 @@ object UnitConverter {
   case class Sqrt(e:Expr) extends Expr
 }
 
-class UnitConverter(val input: ParserInput) extends Parser {
-  import UnitConverter._
+class Calc(val input: ParserInput) extends Parser {
+  import Calc._
 
   def InputLine = rule { Expression ~ EOI }
 

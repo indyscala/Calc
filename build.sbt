@@ -1,4 +1,4 @@
-name := "org.indyscala.parboiled.UnitConverter"
+name := "org.indyscala.parboiled.Calc"
 
 version := "1.0"
 
